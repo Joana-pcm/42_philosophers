@@ -31,4 +31,5 @@ int	parse_args(char **args)
 		if (!ft_is_num(args[i]))
 			return (0);
 	}
+	return (1);
 }
