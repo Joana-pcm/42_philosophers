@@ -10,26 +10,20 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_is_num(char *num)
+#include "../t_incs/philo.h"
+
+int	parse_args(char **args, t_data *data)
 {
 	int	i;
 
-	i = -1;
-	while (num[++i])
-		if (num[i] < '0' || num[i] > '9')
-			return (0);
-	return (1);
-}
-
-int	parse_args(char **args)
-{
-	int	i;
-
-	i = -1;
+	i = 0;
+	if (!args)
+		return (0);
 	while (args[++i])
-	{
 		if (!ft_is_num(args[i]))
 			return (0);
-	}
+	data_init(data, args);
+	if (data->num_of_philos > 200 || data->num_of_philos < 1)
+		return (printf("Invalid number of philosophers\n"), 0);
 	return (1);
 }
