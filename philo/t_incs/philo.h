@@ -11,9 +11,11 @@
 typedef struct s_philo
 {
 	int				id;
-	pthread_mutex_t	*forks;
+	int				dead;
+	pthread_mutex_t	*fork_l;
+	pthread_mutex_t	*fork_r;
 	pthread_mutex_t	*print_mutex;
-	struct timeval	start_time;
+	suseconds_t		start_time;
 }	t_philo;
 
 typedef struct s_data
@@ -30,6 +32,6 @@ typedef struct s_data
 int		ft_atol(const char *nptr);
 int		ft_is_num(char *num);
 int		parse_args(char **args, t_data *data);
-int		data_init(t_data *data, char **args);
+int		data_init(t_data **data, char **args);
 
 #endif
