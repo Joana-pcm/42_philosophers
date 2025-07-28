@@ -52,6 +52,7 @@ int	main(int ac, char **av)
 <time_to_sleep> <time_to_die> [num_of_meals]\n", av[0]), 1);
 	if (!parse_args(av, data))
 		return (printf("Error: Invalid arguments\n"), 1);
+	ft_usleep(time);
 	if (!philo_routine(data, data->philos))
 		return (printf("End routine\n"), 1);
 	free(data->philos);
