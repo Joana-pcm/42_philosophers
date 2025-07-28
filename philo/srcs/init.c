@@ -62,6 +62,7 @@ int data_init(t_data **data, char **args)
 	(*data)->time_to_eat = ft_atol(args[2]);
 	(*data)->time_to_sleep = ft_atol(args[3]);
 	(*data)->time_to_die = ft_atol(args[4]);
+	(*data)->stop_routine = 0;
 	if (args[5])
 		(*data)->num_of_meals = ft_atol(args[5]);
 	else
