@@ -29,9 +29,14 @@ typedef struct s_data
 	t_philo			*philos;
 }	t_data;
 
-int		ft_atol(const char *nptr);
-int		ft_is_num(char *num);
-int		parse_args(char **args, t_data *data);
-int		data_init(t_data **data, char **args);
+int				ft_atol(const char *nptr);
+int				ft_is_num(char *num);
+int				parse_args(char **args, t_data *data);
+int				data_init(t_data **data, char **args);
+int				eating(t_data *data, t_philo *philo);
+int				thinking(t_data *data, t_philo *philo);
+int				sleeping(t_data *data, t_philo *philo);
+int				philo_init(t_data **data, t_philo **philo, pthread_mutex_t *fork);
+pthread_mutex_t	*fork_init(t_data *data);
 
 #endif
