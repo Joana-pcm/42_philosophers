@@ -1,13 +1,13 @@
 NAME = philo
 
-SRC = $(addprefix srcs/, main.c parse.c utils.c)
+SRC = $(addprefix srcs/, main.c init.c time_set.c routine.c parse.c utils.c)
 
 OBJS = ${SRC:.c=.o}
 
 CC = cc
 RM = rm -fr
 CFLAGS = -Wall -Wextra -Werror -g
-INCLUDE = -I include
+INCLUDE = -include ./t_incs/philo.h
 MAKE = make -C
 
 %.o: %.c

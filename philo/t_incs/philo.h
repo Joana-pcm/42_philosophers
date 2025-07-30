@@ -7,6 +7,7 @@
 # include <pthread.h>
 # include <sys/time.h>
 # include <limits.h>
+# include <stdbool.h>
 
 typedef struct s_philo
 {
@@ -28,17 +29,20 @@ typedef struct s_data
 	long			num_of_meals;
 	int				stop_routine;
 	pthread_mutex_t	lock;
-	t_philo			*philos;
+	pthread_mutex_t *fork;
+	t_philo			**philos;
 }	t_data;
 
-int				ft_atol(const char *nptr);
+long			ft_atol(const char *nptr);
 int				ft_is_num(char *num);
-int				parse_args(char **args, t_data *data);
+int				parse_args(char **args, t_data **data);
 int				data_init(t_data **data, char **args);
+void			ft_usleep(long time);
 int				eating(t_data *data, t_philo *philo);
 int				thinking(t_data *data, t_philo *philo);
 int				sleeping(t_data *data, t_philo *philo);
-int				philo_init(t_data **data, t_philo **philo, pthread_mutex_t *fork);
+t_philo			**philo_init(t_data **data, pthread_mutex_t *fork);
 pthread_mutex_t	*fork_init(t_data *data);
+int				set_philos_times(t_data *data);
 
 #endif

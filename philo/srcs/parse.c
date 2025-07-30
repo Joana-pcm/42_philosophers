@@ -12,7 +12,7 @@
 
 #include "../t_incs/philo.h"
 
-int	parse_args(char **args, t_data *data)
+int	parse_args(char **args, t_data **data)
 {
 	int	i;
 
@@ -22,8 +22,8 @@ int	parse_args(char **args, t_data *data)
 	while (args[++i])
 		if (!ft_is_num(args[i]))
 			return (0);
-	data_init(&data, args);
-	if (data->num_of_philos > 200 || data->num_of_philos < 1)
+	data_init(data, args);
+	if ((*data)->num_of_philos > 200 || (*data)->num_of_philos < 1)
 		return (printf("Invalid number of philosophers\n"), 0);
 	return (1);
 }
