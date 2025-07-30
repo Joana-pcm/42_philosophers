@@ -21,6 +21,7 @@ int	death_check(t_philo *philo)
 	/*{*/
 		if (philo->dead)
 			return (printf("%ld %d has died\n", philo->start_time, philo->id), 1);
+		/*if (data->num_of_meals)*/
 	/*}*/
 	return (0);
 }

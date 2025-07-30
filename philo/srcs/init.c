@@ -45,7 +45,7 @@ t_philo	**philo_init(t_data **data, pthread_mutex_t *fork)
 	{
 		philo[i] = malloc(sizeof(t_philo));
 		philo[i]->id = i + 1;
-		philo[i]->start_time = 0;
+		philo[i]->start_time = set_time();
 		philo[i]->dead = 0;
 		philo[i]->fork_l = &fork[i];
 		philo[i]->fork_r = &fork[(i + 1) % (*data)->num_of_philos];
