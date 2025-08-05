@@ -39,7 +39,7 @@ int	thinking(t_data *data, t_philo *philo)
 	pthread_mutex_lock(philo->print_mutex);
 	printf("%ld %d is thinking\n", (set_time() - philo->start_time), philo->id);
 	pthread_mutex_unlock(philo->print_mutex);
-	(void)data; // To avoid unused parameter warning
+	(void)data;
 	return (1);
 }
 
@@ -52,6 +52,7 @@ int	eating(t_data *data, t_philo *philo)
 	ft_usleep(data->time_to_eat);
 	pthread_mutex_unlock(philo->fork_r);
 	pthread_mutex_unlock(philo->fork_l);
+	philo->meals_eaten++;
 	return (1);
 }
 
