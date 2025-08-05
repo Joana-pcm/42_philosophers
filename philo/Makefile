@@ -1,6 +1,7 @@
 NAME = philo
 
-SRC = $(addprefix srcs/, main.c init.c time_set.c routine.c parse.c utils.c)
+SRC = $(addprefix srcs/, main.c init.c time_set.c \
+	  monitoring.c routine.c parse.c utils.c)
 
 OBJS = ${SRC:.c=.o}
 

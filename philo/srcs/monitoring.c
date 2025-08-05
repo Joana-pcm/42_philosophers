@@ -12,13 +12,32 @@
 
 #include "../t_incs/philo.h"
 
-int	death_check(t_philo *philo)
+int	monitor_philos(t_data *data, t_philo **philo)
 {
-	static	int	counter;
+	int	i;
 
-	counter = 0;
+	i = -1;
+	pthread_mutex_lock(&data->lock);
+	while (data->stop_routine)
+		if (death_check(data, philo[++i]))
+			return (data->stop_routine = 0, 0);
+	pthread_mutex_unlock(&data->lock);
+	return (1);
+}
 
+int	death_check(t_data *data, t_philo *philo)
+{
+	static	int	count;
+	
+	if (data->num_of_meals != -1 && philo->meals_eaten >= data->num_of_meals)
+	{
+		count++;
+		if (count == data->num_of_philos)
+			return (data->stop_routine = 0, 1);
+	}
+	if ((set_time() - philo->start_time >= data->time_to_die)	
+		philo->dead = 1;
 	if (philo->dead)
-		return (printf("%ld %d has died\n", philo->start_time, philo->id), 1);
+		return (printf("%ld %d has died\n", (set_time() - philo->start_time), philo->id), 1);
 	return (0);
 }
