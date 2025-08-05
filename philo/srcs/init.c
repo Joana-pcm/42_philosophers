@@ -61,9 +61,9 @@ int data_init(t_data **data, char **args)
 		return (0);
 	(*data)->fork = NULL;
 	(*data)->num_of_philos = ft_atol(args[1]);
-	(*data)->time_to_eat = ft_atol(args[2]);
-	(*data)->time_to_sleep = ft_atol(args[3]);
-	(*data)->time_to_die = ft_atol(args[4]);
+	(*data)->time_to_die = ft_atol(args[2]);
+	(*data)->time_to_eat = ft_atol(args[3]);
+	(*data)->time_to_sleep = ft_atol(args[4]);
 	(*data)->stop_routine = 1;
 	pthread_mutex_init(&(*data)->lock, NULL);
 	if (args[5])

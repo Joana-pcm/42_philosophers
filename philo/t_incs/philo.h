@@ -37,6 +37,7 @@ long			ft_atol(const char *nptr);
 int				ft_is_num(char *num);
 int				parse_args(char **args, t_data **data);
 int				data_init(t_data **data, char **args);
+int				death_check(t_philo *philo);
 int				ft_usleep(long time);
 long			set_time(void);
 int				eating(t_data *data, t_philo *philo);
