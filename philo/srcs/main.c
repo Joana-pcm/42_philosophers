@@ -12,6 +12,35 @@
 
 #include "../t_incs/philo.h"
 
+<<<<<<< HEAD
+=======
+int monitor_philos(t_data *data, t_philo **philo)
+{
+	int	i;
+	i = -1;
+	while (data->stop_routine)
+		if (death_check(data, philo[++i]))
+			return (data->stop_routine = 0, 0);
+}
+
+int	death_check(t_data *data, t_philo *philo)
+{
+	static	int	count;
+	
+	if (data->num_of_meals != -1 && philo->meals_eaten >= data->num_of_meals)
+	{
+		count++;
+		if (count == data->num_of_philos)
+			return (data->stop_routine = 0, 1);
+	}
+	if (set_time() - philo->start_time >= data->time_to_die)	
+		philo->dead = 1;
+	if (philo->dead)
+		return (printf("%ld %d has died\n", (set_time() - philo->start_time), philo->id), 1);
+	return (0);
+}
+
+>>>>>>> 76fcd327ae81da9b1e761fb716c0bec1ad2804a9
 int	philo_routine(t_data *data, t_philo **philos)
 {
 	int	i;
@@ -19,9 +48,15 @@ int	philo_routine(t_data *data, t_philo **philos)
 	i = -1;
 	while (++i < data->num_of_philos)
 	{
+<<<<<<< HEAD
 		eating(data, philos[i]);
 		thinking(data, philos[i]);
 		sleeping(data, philos[i]);
+=======
+		eating(data, data->philos[i]);
+		thinking(data, data->philos[i]);
+		sleeping(data, data->philos[i]);
+>>>>>>> 76fcd327ae81da9b1e761fb716c0bec1ad2804a9
 	}
 	return (1);
 }
