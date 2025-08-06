@@ -50,6 +50,7 @@ t_philo	**philo_init(t_data **data, pthread_mutex_t *fork)
 		philo[i]->fork_l = &fork[i];
 		philo[i]->fork_r = &fork[(i + 1) % (*data)->num_of_philos];
 		philo[i]->print_mutex = &(*data)->lock;
+		philo[i]->data = *data;
 	}
 	return (philo);
 }

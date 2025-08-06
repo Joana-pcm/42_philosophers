@@ -12,53 +12,29 @@
 
 #include "../t_incs/philo.h"
 
-<<<<<<< HEAD
-=======
-int monitor_philos(t_data *data, t_philo **philo)
-{
-	int	i;
-	i = -1;
-	while (data->stop_routine)
-		if (death_check(data, philo[++i]))
-			return (data->stop_routine = 0, 0);
-}
-
-int	death_check(t_data *data, t_philo *philo)
-{
-	static	int	count;
-	
-	if (data->num_of_meals != -1 && philo->meals_eaten >= data->num_of_meals)
-	{
-		count++;
-		if (count == data->num_of_philos)
-			return (data->stop_routine = 0, 1);
-	}
-	if (set_time() - philo->start_time >= data->time_to_die)	
-		philo->dead = 1;
-	if (philo->dead)
-		return (printf("%ld %d has died\n", (set_time() - philo->start_time), philo->id), 1);
-	return (0);
-}
-
->>>>>>> 76fcd327ae81da9b1e761fb716c0bec1ad2804a9
-int	philo_routine(t_data *data, t_philo **philos)
+int	create_threads(t_data *data, t_philo **philos)
 {
 	int	i;
 
 	i = -1;
 	while (++i < data->num_of_philos)
 	{
-<<<<<<< HEAD
-		eating(data, philos[i]);
-		thinking(data, philos[i]);
-		sleeping(data, philos[i]);
-=======
-		eating(data, data->philos[i]);
-		thinking(data, data->philos[i]);
-		sleeping(data, data->philos[i]);
->>>>>>> 76fcd327ae81da9b1e761fb716c0bec1ad2804a9
+		if (pthread_create(&(philos[i]->thread), NULL, (void *)philo_routine, philos[i]) != 0)
+		{
+			while (--i >= 0)
+				pthread_cancel(philos[i]->thread);
+			return (0);
+		}
 	}
 	return (1);
+}
+
+int	philo_routine(t_philo *philos)
+{
+	eating(philos);
+	thinking(philos);
+	sleeping(philos);
+	return (0);
 }
 
 int	main(int ac, char **av)
@@ -73,11 +49,8 @@ int	main(int ac, char **av)
 <time_to_eat> <time_to_sleep> [num_of_meals]\n", av[0]), 1);
 	if (!parse_args(av, &data))
 		return (printf("Error: Invalid arguments\n"), 1);
+	create_threads(data, data->philos);
 	monitor_philos(data, data->philos);
-	while (data->stop_routine)
-	{
-		philo_routine(data, data->philos);
-	}
 	while (++i < data->num_of_philos)
 		free(data->philos[i]);
 	pthread_mutex_destroy(&(data->lock));

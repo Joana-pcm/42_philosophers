@@ -9,6 +9,8 @@
 # include <limits.h>
 # include <stdbool.h>
 
+typedef struct s_data t_data;
+
 typedef struct s_philo
 {
 	int				id;
@@ -16,8 +18,10 @@ typedef struct s_philo
 	int				meals_eaten;
 	pthread_mutex_t	*fork_l;
 	pthread_mutex_t	*fork_r;
+	pthread_t		thread;
 	pthread_mutex_t	*print_mutex;
 	suseconds_t		start_time;
+	t_data			*data;
 }	t_philo;
 
 typedef struct s_data
@@ -41,9 +45,10 @@ int				death_check(t_data *data, t_philo *philo);
 int				monitor_philos(t_data *data, t_philo **philo);
 int				ft_usleep(long time);
 long			set_time(void);
-int				eating(t_data *data, t_philo *philo);
-int				thinking(t_data *data, t_philo *philo);
-int				sleeping(t_data *data, t_philo *philo);
+int				philo_routine(t_philo *philos);
+int				eating(t_philo *philo);
+int				thinking(t_philo *philo);
+int				sleeping(t_philo *philo);
 t_philo			**philo_init(t_data **data, pthread_mutex_t *fork);
 pthread_mutex_t	*fork_init(t_data *data);
 int				set_philos_times(t_data *data);

@@ -35,7 +35,7 @@ int	death_check(t_data *data, t_philo *philo)
 		if (count == data->num_of_philos)
 			return (data->stop_routine = 0, 1);
 	}
-	if ((set_time() - philo->start_time >= data->time_to_die)	
+	if ((set_time() - philo->start_time) >= data->time_to_die)	
 		philo->dead = 1;
 	if (philo->dead)
 		return (printf("%ld %d has died\n", (set_time() - philo->start_time), philo->id), 1);
