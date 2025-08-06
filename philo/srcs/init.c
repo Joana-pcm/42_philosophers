@@ -46,10 +46,10 @@ t_philo	**philo_init(t_data **data, pthread_mutex_t *fork)
 		philo[i]->id = i + 1;
 		philo[i]->start_time = set_time();
 		philo[i]->meals_eaten = 0;
+		philo[i]->last_meal = 0;
 		philo[i]->dead = 0;
 		philo[i]->fork_l = &fork[i];
 		philo[i]->fork_r = &fork[(i + 1) % (*data)->num_of_philos];
-		philo[i]->print_mutex = &(*data)->lock;
 		philo[i]->data = *data;
 	}
 	return (philo);

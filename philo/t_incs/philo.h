@@ -16,6 +16,8 @@ typedef struct s_philo
 	int				id;
 	int				dead;
 	int				meals_eaten;
+	long			last_meal;
+	int				test;
 	pthread_mutex_t	*fork_l;
 	pthread_mutex_t	*fork_r;
 	pthread_t		thread;

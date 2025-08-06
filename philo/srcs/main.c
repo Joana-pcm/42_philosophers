@@ -11,29 +11,54 @@
 /* ************************************************************************** */
 
 #include "../t_incs/philo.h"
+#include <pthread.h>
 
 int	create_threads(t_data *data, t_philo **philos)
 {
 	int	i;
 
 	i = -1;
+	/*printf("num of philos:\t%ld\n", data->num_of_philos);*/
 	while (++i < data->num_of_philos)
 	{
 		if (pthread_create(&(philos[i]->thread), NULL, (void *)philo_routine, philos[i]) != 0)
-		{
-			while (--i >= 0)
-				pthread_cancel(philos[i]->thread);
 			return (0);
-		}
 	}
+	i = -1;
+	while (++i < data->num_of_philos)
+	{
+		pthread_join(philos[i]->thread, NULL);
+	}
+
 	return (1);
 }
 
 int	philo_routine(t_philo *philos)
 {
-	eating(philos);
-	thinking(philos);
-	sleeping(philos);
+	while (1)
+	{	
+		monitor_philos(philos->data, philos->data->philos);
+		if (!philos->data->stop_routine)
+			break ;
+		pthread_mutex_lock(philos->print_mutex);
+		eating(philos);
+		pthread_mutex_unlock(philos->print_mutex);
+		monitor_philos(philos->data, philos->data->philos);
+		if (!philos->data->stop_routine)
+			break ;
+		pthread_mutex_lock(philos->print_mutex);
+		thinking(philos);
+		pthread_mutex_unlock(philos->print_mutex);
+		monitor_philos(philos->data, philos->data->philos);
+		if (!philos->data->stop_routine)
+			break ;
+		pthread_mutex_lock(philos->print_mutex);
+		sleeping(philos);
+		pthread_mutex_unlock(philos->print_mutex);
+		monitor_philos(philos->data, philos->data->philos);
+		if (!philos->data->stop_routine)
+			break ;
+	}
 	return (0);
 }
 
@@ -50,7 +75,6 @@ int	main(int ac, char **av)
 	if (!parse_args(av, &data))
 		return (printf("Error: Invalid arguments\n"), 1);
 	create_threads(data, data->philos);
-	monitor_philos(data, data->philos);
 	while (++i < data->num_of_philos)
 		free(data->philos[i]);
 	pthread_mutex_destroy(&(data->lock));
