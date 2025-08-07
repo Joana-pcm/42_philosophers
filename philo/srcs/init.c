@@ -91,9 +91,9 @@ int	parse_args(char **args, t_data **data)
 		if (!ft_is_num(args[i]))
 			return (0);
 	data_init(data, args);
-	if ((*data)->time_to_die < 0
-	|| (*data)->time_to_eat < 0
-	|| (*data)->time_to_sleep < 0)
+	if ((*data)->time_to_die < 1
+	|| (*data)->time_to_eat < 1
+	|| (*data)->time_to_sleep < 1)
 		return (0);
 	if ((*data)->num_of_philos > 200 || (*data)->num_of_philos < 1)
 		return (printf("Invalid number of philosophers\n"), 0);
