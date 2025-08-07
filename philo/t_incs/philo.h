@@ -46,7 +46,7 @@ int				parse_args(char **args, t_data **data);
 int				data_init(t_data **data, char **args);
 int				death_check(t_data *data, t_philo *philo);
 int				monitor_philos(t_data *data, t_philo **philo);
-int				ft_usleep(long time);
+int				ft_usleep(long time, t_philo *philo);
 long			set_time(void);
 int				philo_routine(t_philo *philos);
 int				eating(t_philo *philo);

@@ -97,5 +97,7 @@ int	parse_args(char **args, t_data **data)
 		return (0);
 	if ((*data)->num_of_philos > 200 || (*data)->num_of_philos < 1)
 		return (printf("Invalid number of philosophers\n"), 0);
+	/*if ((*data)->num_of_philos == 1)*/
+	/*	single_philo()*/
 	return (1);
 }

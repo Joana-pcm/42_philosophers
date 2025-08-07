@@ -49,7 +49,7 @@ int	philo_routine(t_philo *philos)
 		pthread_mutex_lock(philos->print_mutex);
 		printf("%ld %d is sleeping\n", (set_time() - philos->start_time), philos->id);
 		pthread_mutex_unlock(philos->print_mutex);
-		ft_usleep(philos->data->time_to_sleep);
+		ft_usleep(philos->data->time_to_sleep, philos);
 		monitor_philos(philos->data, philos->data->philos);
 		if (!philos->data->stop_routine)
 			break ;
@@ -71,7 +71,10 @@ int	main(int ac, char **av)
 		return (printf("Error: Invalid arguments\n"), 1);
 	create_threads(data, data->philos);
 	while (++i < data->num_of_philos)
+	{
+		free(data->philos[i]->eat_mutex);
 		free(data->philos[i]);
+	}
 	pthread_mutex_destroy(&(data->lock));
 	free(data->philos);
 	free(data->fork);
