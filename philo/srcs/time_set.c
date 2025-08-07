@@ -14,6 +14,6 @@ int	ft_usleep(long time)
 
 	start = set_time();
 	while (set_time() - start < time)
-		usleep(200);
+		usleep(100);
 	return (0);
 }

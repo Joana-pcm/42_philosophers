@@ -34,14 +34,16 @@ int	death_check(t_data *data, t_philo *philo)
 {
 	static	int	count;
 	
+	pthread_mutex_lock(philo->eat_mutex);
 	if (data->num_of_meals != -1 && philo->meals_eaten >= data->num_of_meals)
 	{
 		count++;
 		if (count == data->num_of_philos)
 			return (data->stop_routine = 0, 1);
 	}
-	if (philo->last_meal >= data->time_to_die)	
+	if ((set_time() - philo->start_time) - philo->last_meal >= data->time_to_die)	
 		philo->dead = 1;
+	pthread_mutex_unlock(philo->eat_mutex);
 	if (philo->dead)
 		return (printf("%ld %d has died\n", (set_time() - philo->start_time), philo->id), 1);
 	return (0);

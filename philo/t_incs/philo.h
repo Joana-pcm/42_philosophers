@@ -20,6 +20,7 @@ typedef struct s_philo
 	int				test;
 	pthread_mutex_t	*fork_l;
 	pthread_mutex_t	*fork_r;
+	pthread_mutex_t	*eat_mutex;
 	pthread_t		thread;
 	pthread_mutex_t	*print_mutex;
 	suseconds_t		start_time;
@@ -49,8 +50,6 @@ int				ft_usleep(long time);
 long			set_time(void);
 int				philo_routine(t_philo *philos);
 int				eating(t_philo *philo);
-int				thinking(t_philo *philo);
-int				sleeping(t_philo *philo);
 t_philo			**philo_init(t_data **data, pthread_mutex_t *fork);
 pthread_mutex_t	*fork_init(t_data *data);
 int				set_philos_times(t_data *data);

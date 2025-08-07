@@ -18,43 +18,38 @@ int	create_threads(t_data *data, t_philo **philos)
 	int	i;
 
 	i = -1;
-	/*printf("num of philos:\t%ld\n", data->num_of_philos);*/
 	while (++i < data->num_of_philos)
-	{
 		if (pthread_create(&(philos[i]->thread), NULL, (void *)philo_routine, philos[i]) != 0)
 			return (0);
-	}
 	i = -1;
 	while (++i < data->num_of_philos)
-	{
 		pthread_join(philos[i]->thread, NULL);
-	}
-
 	return (1);
 }
 
 int	philo_routine(t_philo *philos)
 {
+	if (philos->id % 2 == 0)
+		usleep(philos->data->time_to_eat * 1000);
 	while (1)
 	{	
 		monitor_philos(philos->data, philos->data->philos);
 		if (!philos->data->stop_routine)
 			break ;
-		pthread_mutex_lock(philos->print_mutex);
 		eating(philos);
+		monitor_philos(philos->data, philos->data->philos);
+		if (!philos->data->stop_routine)
+			break ;
+		pthread_mutex_lock(philos->print_mutex);
+		printf("%ld %d is thinking\n", (set_time() - philos->start_time), philos->id);
 		pthread_mutex_unlock(philos->print_mutex);
 		monitor_philos(philos->data, philos->data->philos);
 		if (!philos->data->stop_routine)
 			break ;
 		pthread_mutex_lock(philos->print_mutex);
-		thinking(philos);
+		printf("%ld %d is sleeping\n", (set_time() - philos->start_time), philos->id);
 		pthread_mutex_unlock(philos->print_mutex);
-		monitor_philos(philos->data, philos->data->philos);
-		if (!philos->data->stop_routine)
-			break ;
-		pthread_mutex_lock(philos->print_mutex);
-		sleeping(philos);
-		pthread_mutex_unlock(philos->print_mutex);
+		ft_usleep(philos->data->time_to_sleep);
 		monitor_philos(philos->data, philos->data->philos);
 		if (!philos->data->stop_routine)
 			break ;
