@@ -44,6 +44,6 @@ int	eating(t_philo *philo)
 	pthread_mutex_unlock(philo->print_mutex);
 	pthread_mutex_unlock(philo->fork_r);
 	pthread_mutex_unlock(philo->fork_l);
-	ft_usleep(philo->data->time_to_eat);
+	ft_usleep(philo->data->time_to_eat, philo);
 	return (1);
 }
