@@ -70,6 +70,8 @@ int data_init(t_data **data, char **args)
 	(*data)->time_to_sleep = ft_atol(args[4]);
 	(*data)->stop_routine = 1;
 	pthread_mutex_init(&(*data)->lock, NULL);
+	(*data)->death_mutex = malloc(sizeof(pthread_mutex_t));
+	pthread_mutex_init((*data)->death_mutex, NULL);
 	if (args[5])
 		(*data)->num_of_meals = ft_atol(args[5]);
 	else
@@ -97,7 +99,6 @@ int	parse_args(char **args, t_data **data)
 		return (0);
 	if ((*data)->num_of_philos > 200 || (*data)->num_of_philos < 1)
 		return (printf("Invalid number of philosophers\n"), 0);
-	/*if ((*data)->num_of_philos == 1)*/
-	/*	single_philo()*/
+
 	return (1);
 }

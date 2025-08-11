@@ -26,35 +26,42 @@ int	create_threads(t_data *data, t_philo **philos)
 		pthread_join(philos[i]->thread, NULL);
 	return (1);
 }
-
-int	philo_routine(t_philo *philos)
+void	single_philo(t_philo *philo)
 {
+	pthread_mutex_lock(philo->print_mutex);
+	printf("%ld %d has picked up a fork\n", (set_time() - philo->start_time), philo->id);
+	pthread_mutex_unlock(philo->print_mutex);
+	ft_usleep(philo->data->time_to_die, philo);
+}
+
+void	philo_routine(t_philo *philos)
+{
+	if (philos->data->num_of_philos == 1)
+		return (single_philo(philos));
 	if (philos->id % 2 == 0)
 		usleep(philos->data->time_to_eat * 1000);
 	while (1)
 	{	
-		monitor_philos(philos->data, philos->data->philos);
-		if (!philos->data->stop_routine)
-			break ;
+		// pthread_mutex_lock(philos->data->death_mutex);
+		// ft_usleep(0, philos);
+		// if (!philos->data->stop_routine)
+			// break ;
+		// pthread_mutex_unlock(philos->data->death_mutex);
 		eating(philos);
-		monitor_philos(philos->data, philos->data->philos);
 		if (!philos->data->stop_routine)
 			break ;
 		pthread_mutex_lock(philos->print_mutex);
 		printf("%ld %d is thinking\n", (set_time() - philos->start_time), philos->id);
 		pthread_mutex_unlock(philos->print_mutex);
-		monitor_philos(philos->data, philos->data->philos);
-		if (!philos->data->stop_routine)
-			break ;
+		// if (!philos->data->stop_routine)
+		// 	break ;
 		pthread_mutex_lock(philos->print_mutex);
 		printf("%ld %d is sleeping\n", (set_time() - philos->start_time), philos->id);
 		pthread_mutex_unlock(philos->print_mutex);
 		ft_usleep(philos->data->time_to_sleep, philos);
-		monitor_philos(philos->data, philos->data->philos);
 		if (!philos->data->stop_routine)
 			break ;
 	}
-	return (0);
 }
 
 int	main(int ac, char **av)

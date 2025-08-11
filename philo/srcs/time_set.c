@@ -13,10 +13,12 @@ int	ft_usleep(long time, t_philo *philo)
 	long	start;
 
 	start = set_time();
+	if (time == 0 && !monitor_philos(philo->data, philo->data->philos))
+		return (1);
 	while (set_time() - start < time)
 	{
 		usleep(100);
-		if (death_check(philo->data, philo))
+		if (!monitor_philos(philo->data, philo->data->philos))
 			return (1);
 	}
 	return (0);

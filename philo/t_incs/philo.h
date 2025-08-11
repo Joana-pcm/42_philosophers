@@ -37,6 +37,7 @@ typedef struct s_data
 	int				stop_routine;
 	pthread_mutex_t	lock;
 	pthread_mutex_t *fork;
+	pthread_mutex_t	*death_mutex;
 	t_philo			**philos;
 }	t_data;
 
@@ -48,10 +49,9 @@ int				death_check(t_data *data, t_philo *philo);
 int				monitor_philos(t_data *data, t_philo **philo);
 int				ft_usleep(long time, t_philo *philo);
 long			set_time(void);
-int				philo_routine(t_philo *philos);
+void			philo_routine(t_philo *philos);
 int				eating(t_philo *philo);
 t_philo			**philo_init(t_data **data, pthread_mutex_t *fork);
 pthread_mutex_t	*fork_init(t_data *data);
-int				set_philos_times(t_data *data);
 
 #endif
