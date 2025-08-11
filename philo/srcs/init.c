@@ -6,7 +6,7 @@
 /*   By: jpatrici <jpatrici@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 14:07:11 by jpatrici          #+#    #+#             */
-/*   Updated: 2025/07/23 16:26:39 by jpatrici         ###   ########.fr       */
+/*   Updated: 2025/08/11 20:37:50 by jpatrici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ pthread_mutex_t	*fork_init(t_data *data)
 	fork = malloc(sizeof(pthread_mutex_t) * data->num_of_philos);
 	while (++i < data->num_of_philos)
 	{
-		if(pthread_mutex_init(&fork[i], NULL))
+		if (pthread_mutex_init(&fork[i], NULL))
 			return (free(data), NULL);
 	}
 	return (fork);
@@ -58,7 +58,7 @@ t_philo	**philo_init(t_data **data, pthread_mutex_t *fork)
 	return (philo);
 }
 
-int data_init(t_data **data, char **args)
+int	data_init(t_data **data, char **args)
 {
 	*data = malloc(sizeof(t_data));
 	if (!*data)
@@ -94,11 +94,10 @@ int	parse_args(char **args, t_data **data)
 			return (0);
 	data_init(data, args);
 	if ((*data)->time_to_die < 1
-	|| (*data)->time_to_eat < 1
-	|| (*data)->time_to_sleep < 1)
+		|| (*data)->time_to_eat < 1
+		|| (*data)->time_to_sleep < 1)
 		return (0);
 	if ((*data)->num_of_philos > 200 || (*data)->num_of_philos < 1)
 		return (printf("Invalid number of philosophers\n"), 0);
-
 	return (1);
 }

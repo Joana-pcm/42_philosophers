@@ -6,7 +6,7 @@
 /*   By: jpatrici <jpatrici@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 18:52:01 by jpatrici          #+#    #+#             */
-/*   Updated: 2025/08/05 18:28:53 by jpatrici         ###   ########.fr       */
+/*   Updated: 2025/08/11 20:36:38 by jpatrici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,27 @@ int	pickup_fork(t_philo *philo)
 		pthread_mutex_lock(philo->fork_r);
 		pthread_mutex_lock(philo->fork_l);
 	}
-		pthread_mutex_lock(philo->print_mutex);
-		printf("%ld %d has picked up a fork\n", (set_time() - philo->start_time), philo->id);
-		printf("%ld %d has picked up a fork\n", (set_time() - philo->start_time), philo->id);
-		pthread_mutex_unlock(philo->print_mutex);
+	if (ft_usleep(0, philo))
+		return (0);
+	if (!stop_checker(philo))
+	{
+		pthread_mutex_unlock(philo->fork_r);
+		pthread_mutex_unlock(philo->fork_l);
+		return (0);
+	}
+	pthread_mutex_lock(philo->print_mutex);
+	printf("%ld %d has picked up a fork\n",
+		(set_time() - philo->start_time), philo->id);
+	printf("%ld %d has picked up a fork\n",
+		(set_time() - philo->start_time), philo->id);
+	pthread_mutex_unlock(philo->print_mutex);
 	return (1);
 }
 
 int	eating(t_philo *philo)
 {
-	pickup_fork(philo);
+	if (!pickup_fork(philo))
+		return (0);
 	pthread_mutex_lock(philo->eat_mutex);
 	philo->last_meal = set_time() - philo->start_time;
 	if (philo->data->num_of_meals > -1)
@@ -42,8 +53,8 @@ int	eating(t_philo *philo)
 	pthread_mutex_lock(philo->print_mutex);
 	printf("%ld %d is eating\n", philo->last_meal, philo->id);
 	pthread_mutex_unlock(philo->print_mutex);
+	ft_usleep(philo->data->time_to_eat, philo);
 	pthread_mutex_unlock(philo->fork_r);
 	pthread_mutex_unlock(philo->fork_l);
-	ft_usleep(philo->data->time_to_eat, philo);
 	return (1);
 }

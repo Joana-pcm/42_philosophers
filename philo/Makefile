@@ -7,7 +7,8 @@ OBJS = ${SRC:.c=.o}
 
 CC = cc
 RM = rm -fr
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror -g 
+# CFLAGS += -fsanitize=thread
 INCLUDE = -include ./t_incs/philo.h
 MAKE = make -C
 
@@ -17,7 +18,7 @@ MAKE = make -C
 all:	${NAME}
 
 $(NAME):	${OBJS}
-	@${CC} ${OBJS} -o ${NAME}
+	@${CC} ${CFLAGS} ${OBJS} -o ${NAME}
 
 clean:
 	@${RM} ${OBJS}

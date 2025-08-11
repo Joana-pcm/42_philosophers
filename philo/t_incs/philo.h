@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jpatrici <jpatrici@student.42porto.com>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/11 20:34:48 by jpatrici          #+#    #+#             */
+/*   Updated: 2025/08/11 20:45:19 by jpatrici         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PHILO_H
 # define PHILO_H
 
@@ -9,7 +21,7 @@
 # include <limits.h>
 # include <stdbool.h>
 
-typedef struct s_data t_data;
+typedef struct s_data	t_data;
 
 typedef struct s_philo
 {
@@ -36,13 +48,14 @@ typedef struct s_data
 	long			num_of_meals;
 	int				stop_routine;
 	pthread_mutex_t	lock;
-	pthread_mutex_t *fork;
+	pthread_mutex_t	*fork;
 	pthread_mutex_t	*death_mutex;
 	t_philo			**philos;
 }	t_data;
 
 long			ft_atol(const char *nptr);
 int				ft_is_num(char *num);
+int				stop_checker(t_philo *philos);
 int				parse_args(char **args, t_data **data);
 int				data_init(t_data **data, char **args);
 int				death_check(t_data *data, t_philo *philo);
