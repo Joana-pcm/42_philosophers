@@ -76,11 +76,9 @@ void	philo_routine(t_philo *philos)
 
 int	main(int ac, char **av)
 {
-	int		i;
 	t_data	*data;
 
 	data = NULL;
-	i = -1;
 	if (ac < 5 || ac > 6)
 		return (printf("Usage: %s <num_of_philos> <time_to_die> \
 <time_to_eat> <time_to_sleep> [num_of_meals]\n", av[0]), 1);
