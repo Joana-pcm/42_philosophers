@@ -57,6 +57,7 @@ long			ft_atol(const char *nptr);
 int				ft_is_num(char *num);
 int				stop_checker(t_philo *philos);
 int				parse_args(char **args, t_data **data);
+void			ft_free_philos(t_data *data);
 int				data_init(t_data **data, char **args);
 int				death_check(t_data *data, t_philo *philo);
 int				monitor_philos(t_data *data, t_philo **philo);
