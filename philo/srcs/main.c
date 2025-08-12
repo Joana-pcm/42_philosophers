@@ -52,11 +52,8 @@ void	philo_routine(t_philo *philos)
 		return (single_philo(philos));
 	while (1)
 	{
-		if (!stop_checker(philos) || ft_usleep(0, philos))
-			break ;
-		if (!stop_checker(philos))
-			break ;
-		if (!eating(philos))
+		if (!stop_checker(philos) || ft_usleep(0, philos)
+			|| !stop_checker(philos) || !eating(philos))
 			break ;
 		if (!stop_checker(philos))
 			break ;
@@ -91,21 +88,7 @@ int	main(int ac, char **av)
 		create_threads(data, data->philos);
 	else
 		printf("Error: Invalid arguments\n");
-	while (++i < data->num_of_philos)
-	{
-		if (data->philos && data->philos[i])
-		{
-			if (data->philos[i]->eat_mutex)
-				free(data->philos[i]->eat_mutex);
-
-			free(data->philos[i]);
-		}
-	}
-	if (data->death_mutex)
-		free(data->death_mutex);
-	pthread_mutex_destroy(&(data->lock));
-	free(data->philos);
-	free(data->fork);
-	free(data);
+	if (data)
+		ft_free_philos(data);
 	return (0);
 }

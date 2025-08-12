@@ -50,3 +50,25 @@ int	ft_is_num(char *num)
 			return (0);
 	return (1);
 }
+
+void	ft_free_philos(t_data *data)
+{
+	int	i;
+
+	i = -1;
+	while (++i < data->num_of_philos)
+	{
+		if (data->philos && data->philos[i])
+		{
+			if (data->philos[i]->eat_mutex)
+				free(data->philos[i]->eat_mutex);
+			free(data->philos[i]);
+		}
+	}
+	if (data->death_mutex)
+		free(data->death_mutex);
+	pthread_mutex_destroy(&(data->lock));
+	free(data->philos);
+	free(data->fork);
+	free(data);
+}
